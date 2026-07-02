@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peeyash Estate | Luxury Homes, Smart Investments, Trusted Agents</title>
+    <meta
+      name="description"
+      content="Peeyash Estate is a high-end real estate platform for buying, renting, selling, and investing in premium homes, apartments, and commercial properties."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Public+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <div class="container nav-wrap">
+          <a href="index.html" class="brand">
+            <span class="brand-mark">P</span>
+            <div>
+              <strong>Peeyash Estate</strong>
+              <small>Classic Modern Realty</small>
+            </div>
+          </a>
+
+          <nav class="desktop-nav" aria-label="Primary navigation">
+            <a href="index.html" class="active">Home</a>
+            <a href="listings.html">Listings</a>
+            <a href="#agents">Agents</a>
+            <a href="#neighborhoods">Neighborhoods</a>
+            <a href="#insights">Market Insights</a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <div class="nav-actions">
+            <button class="saved-chip" type="button" id="savedSummaryBtn" aria-label="Saved properties">
+              ❤ <span id="savedCount">0</span>
+            </button>
+            <a href="#contact" class="btn btn-outline">Request Valuation</a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero hero-home">
+          <div class="hero-media"></div>
+          <div class="hero-overlay"></div>
+
+          <div class="container hero-grid">
+            <div class="hero-copy reveal">
+              <span class="eyebrow">Premier Real Estate Platform</span>
+              <h1>Find homes that match your ambition, lifestyle, and next move.</h1>
+              <p>
+                Explore waterfront villas, modern apartments, gated-family homes, and high-yield commercial spaces through a polished property experience built for buyers, renters, investors, and sellers.
+              </p>
+
+              <div class="hero-metrics">
+                <article>
+                  <strong>1,248+</strong>
+                  <span>Active Listings</span>
+                </article>
+                <article>
+                  <strong>98%</strong>
+                  <span>Client Satisfaction</span>
+                </article>
+                <article>
+                  <strong>₦1.6B+</strong>
+                  <span>Closed Deals</span>
+                </article>
+              </div>
+            </div>
+
+            <div class="hero-search-glass reveal">
+              <div class="search-tabs" role="tablist" aria-label="Property intent tabs">
+                <button class="search-tab active" data-tab="buy" type="button">Buy</button>
+                <button class="search-tab" data-tab="rent" type="button">Rent</button>
+                <button class="search-tab" data-tab="sell" type="button">Sell</button>
+                <button class="search-tab" data-tab="commercial" type="button">Commercial</button>
+              </div>
+
+              <form class="property-search-form">
+                <div class="field-group wide">
+                  <label for="location">Location</label>
+                  <input id="location" type="text" placeholder="Ikoyi, Lekki, Abuja, Victoria Island" />
+                </div>
+                <div class="field-group">
+                  <label for="propertyType">Property Type</label>
+                  <select id="propertyType">
+                    <option>Any Type</option>
+                    <option>Luxury Villa</option>
+                    <option>Apartment</option>
+                    <option>Townhouse</option>
+                    <option>Commercial Space</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label for="budget">Budget</label>
+                  <select id="budget">
+                    <option>Any Budget</option>
+                    <option>₦80M – ₦150M</option>
+                    <option>₦150M – ₦300M</option>
+                    <option>₦300M – ₦700M</option>
+                    <option>₦700M+</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label for="bedrooms">Bedrooms</label>
+                  <select id="bedrooms">
+                    <option>Any</option>
+                    <option>2+</option>
+                    <option>3+</option>
+                    <option>4+</option>
+                    <option>5+</option>
+                  </select>
+                </div>
+                <button class="btn btn-gold search-btn" type="button">Search Properties</button>
+              </form>
+
+              <div class="quick-tags">
+                <span>Popular:</span>
+                <a href="listings.html">Beachfront Homes</a>
+                <a href="listings.html">Serviced Apartments</a>
+                <a href="listings.html">Office Suites</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="sticky-search-bar">
+          <div class="container sticky-search-inner">
+            <strong>Find Property Faster</strong>
+            <div class="sticky-search-controls">
+              <input type="text" placeholder="Search city, district, or landmark" />
+              <a href="listings.html" class="btn btn-gold">Browse Listings</a>
+            </div>
+          </div>
+        </div>
+
+        <section class="section property-pulse">
+          <div class="container">
+            <div class="section-head reveal">
+              <div>
+                <span class="eyebrow">Property Pulse</span>
+                <h2>Featured listings moving the market right now</h2>
+              </div>
+              <a href="listings.html" class="text-link">View full catalog</a>
+            </div>
+
+            <div class="listing-grid four-col">
+              <article class="listing-card reveal">
+                <div class="image-wrap">
+                  <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" alt="Modern waterfront villa" />
+                  <span class="status-badge">Just Listed</span>
+                  <button class="save-btn" data-id="villa-ikoyi" data-title="Waterfront Glass Villa" type="button" aria-label="Save Waterfront Glass Villa">❤</button>
+                </div>
+                <div class="listing-body">
+                  <div class="price-row">
+                    <h3>₦480,000,000</h3>
+                    <span>For Sale</span>
+                  </div>
+                  <h4>Waterfront Glass Villa, Ikoyi</h4>
+                  <p>
+                    A six-bedroom smart residence with private cinema, rooftop lounge, infinity-edge pool, and direct waterfront views in one of the city’s most desirable enclaves.
+                  </p>
+                  <div class="meta-icons">
+                    <span>6 Beds</span>
+                    <span>7 Baths</span>
+                    <span>4 Parking</span>
+                    <span>920 sqm</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="listings.html" class="btn btn-dark">View Details</a>
+                    <a href="#contact" class="btn btn-outline">Schedule Viewing</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="listing-card reveal">
+                <div class="image-wrap">
+                  <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" alt="Luxury penthouse apartment" />
+                  <span class="status-badge alt">Price Reduced</span>
+                  <button class="save-btn" data-id="penthouse-vi" data-title="Skyline Penthouse" type="button" aria-label="Save Skyline Penthouse">❤</button>
+                </div>
+                <div class="listing-body">
+                  <div class="price-row">
+                    <h3>₦350,000,000</h3>
+                    <span>For Sale</span>
+                  </div>
+                  <h4>Skyline Penthouse, Victoria Island</h4>
+                  <p>
+                    Designed for executive living, this four-bedroom penthouse offers floor-to-ceiling glazing, concierge service, spa-style bathrooms, and panoramic city views.
+                  </p>
+                  <div class="meta-icons">
+                    <span>4 Beds</span>
+                    <span>5 Baths</span>
+                    <span>3 Parking</span>
+                    <span>610 sqm</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="listings.html" class="btn btn-dark">View Details</a>
+                    <a href="#contact" class="btn btn-outline">Schedule Viewing</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="listing-card reveal">
+                <div class="image-wrap">
+                  <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80" alt="Family townhouse in gated estate" />
+                  <span class="status-badge muted">Under Contract</span>
+                  <button class="save-btn" data-id="townhouse-lekki" data-title="Palm Court Townhouse" type="button" aria-label="Save Palm Court Townhouse">❤</button>
+                </div>
+                <div class="listing-body">
+                  <div class="price-row">
+                    <h3>₦210,000,000</h3>
+                    <span>For Sale</span>
+                  </div>
+                  <h4>Palm Court Townhouse, Lekki Phase 1</h4>
+                  <p>
+                    A refined family home with private study, fitted kitchen, walk-in wardrobes, outdoor lounge, and access to secure estate amenities for long-term comfort.
+                  </p>
+                  <div class="meta-icons">
+                    <span>5 Beds</span>
+                    <span>5 Baths</span>
+                    <span>2 Parking</span>
+                    <span>430 sqm</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="listings.html" class="btn btn-dark">View Details</a>
+                    <a href="#contact" class="btn btn-outline">Schedule Viewing</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="listing-card reveal">
+                <div class="image-wrap">
+                  <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80" alt="Premium office tower interior" />
+                  <span class="status-badge gold">Hot Commercial</span>
+                  <button class="save-btn" data-id="office-abuja" data-title="Prime Office Tower" type="button" aria-label="Save Prime Office Tower">❤</button>
+                </div>
+                <div class="listing-body">
+                  <div class="price-row">
+                    <h3>₦28,000,000 / yr</h3>
+                    <span>Commercial Lease</span>
+                  </div>
+                  <h4>Prime Office Tower, Central Abuja</h4>
+                  <p>
+                    Premium commercial floors with reception zone, meeting suites, backup power, controlled access, and outstanding corporate visibility in the capital’s core.
+                  </p>
+                  <div class="meta-icons">
+                    <span>12 Offices</span>
+                    <span>4 Meeting Rooms</span>
+                    <span>20 Parking</span>
+                    <span>1200 sqm</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="listings.html" class="btn btn-dark">View Details</a>
+                    <a href="#contact" class="btn btn-outline">Schedule Viewing</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section insights-strip" id="insights">
+          <div class="container stats-board reveal">
+            <div class="section-head compact">
+              <div>
+                <span class="eyebrow">Market Insights</span>
+                <h2>Live numbers shaping smart property decisions</h2>
+              </div>
+              <p>
+                Updated visual metrics give buyers and sellers a faster read on pricing behavior, inventory flow, and the pace of transactions across key premium neighborhoods.
+              </p>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <span>Average Sale Price</span>
+                <strong data-stat="285000000">₦0</strong>
+                <small>Across luxury residential zones</small>
+              </article>
+              <article class="stat-card">
+                <span>Total Live Listings</span>
+                <strong data-stat="1248">0</strong>
+                <small>Buy, rent, and commercial inventory</small>
+              </article>
+              <article class="stat-card">
+                <span>Closed Deals This Quarter</span>
+                <strong data-stat="186">0</strong>
+                <small>Verified transactions completed</small>
+              </article>
+              <article class="stat-card">
+                <span>Average Days on Market</span>
+                <strong data-stat="41">0</strong>
+                <small>Well-priced premium listings</small>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section value-grid">
+          <div class="container">
+            <div class="section-head reveal">
+              <div>
+                <span class="eyebrow">Why Peeyash Estate</span>
+                <h2>Built for serious buyers, sellers, and investors</h2>
+              </div>
+            </div>
+
+            <div class="feature-grid">
+              <article class="feature-card reveal">
+                <h3>Verified Listings</h3>
+                <p>Every featured property is reviewed for location clarity, photography quality, pricing logic, and documentation confidence before it appears on the platform.</p>
+              </article>
+              <article class="feature-card reveal">
+                <h3>Expert Agents</h3>
+                <p>Our agents combine local market depth with polished client handling, negotiation skill, and on-ground coordination for premium residential and commercial deals.</p>
+              </article>
+              <article class="feature-card reveal">
+                <h3>Smart Investment Guidance</h3>
+                <p>We highlight rental yield potential, resale strength, neighborhood growth, and asset positioning so every purchase can be evaluated with real strategy.</p>
+              </article>
+              <article class="feature-card reveal">
+                <h3>End-to-End Support</h3>
+                <p>From shortlist to site inspection, valuation, documentation, and closing, Peeyash Estate keeps the journey calm, transparent, and professionally managed.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section split-showcase">
+          <div class="container split-grid">
+            <div class="showcase-panel image-panel reveal">
+              <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80" alt="Elegant luxury residence exterior" />
+            </div>
+            <div class="showcase-panel text-panel reveal">
+              <span class="eyebrow">Signature Collection</span>
+              <h2>Residences designed for presence, privacy, and long-term value</h2>
+              <p>
+                From lake-view villas with resort-style terraces to premium city apartments with concierge-led convenience, our signature collection focuses on homes that elevate both lifestyle and asset quality.
+              </p>
+              <div class="bullet-columns">
+                <div>
+                  <strong>Luxury Features</strong>
+                  <ul>
+                    <li>Private cinemas and rooftop lounges</li>
+                    <li>Smart-home climate and security control</li>
+                    <li>Designer kitchens and spa bathrooms</li>
+                  </ul>
+                </div>
+                <div>
+                  <strong>Ownership Value</strong>
+                  <ul>
+                    <li>Strong rental demand zones</li>
+                    <li>Prestige addresses with scarcity advantage</li>
+                    <li>Modern layouts suited for resale appeal</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="listings.html" class="btn btn-gold">Explore Signature Listings</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section agents-section" id="agents">
+          <div class="container">
+            <div class="section-head reveal">
+              <div>
+                <span class="eyebrow">Agent Hub</span>
+                <h2>Trusted advisors with local expertise and strong deal history</h2>
+              </div>
+            </div>
+
+            <div class="agents-grid">
+              <article class="agent-card reveal">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80" alt="Senior real estate agent" />
+                <div class="agent-body">
+                  <h3>Amara Benson</h3>
+                  <p class="agent-role">Luxury Residential Specialist</p>
+                  <p>License No: RE-LAG-20481</p>
+                  <p>Closed 18 premium transactions in the last 12 months across Ikoyi and Victoria Island.</p>
+                  <div class="mini-sales">
+                    <span>Recent Sales</span>
+                    <div class="sales-track">
+                      <span>Banana Island Villa — ₦620M</span>
+                      <span>VI Penthouse — ₦355M</span>
+                    </div>
+                  </div>
+                  <div class="agent-links">
+                    <a href="#contact">Book Consultation</a>
+                    <a href="https://wa.me/2348000000000" target="_blank" rel="noreferrer">WhatsApp</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="agent-card reveal">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt="Commercial real estate advisor" />
+                <div class="agent-body">
+                  <h3>David Kareem</h3>
+                  <p class="agent-role">Commercial & Investment Advisor</p>
+                  <p>License No: RE-ABJ-11872</p>
+                  <p>Specializes in office, hospitality, and mixed-use assets with detailed return-focused advisory.</p>
+                  <div class="mini-sales">
+                    <span>Recent Sales</span>
+                    <div class="sales-track">
+                      <span>Business District Tower — ₦1.1B</span>
+                      <span>Retail Plaza Lease — ₦47M</span>
+                    </div>
+                  </div>
+                  <div class="agent-links">
+                    <a href="#contact">Book Consultation</a>
+                    <a href="https://wa.me/2348000000000" target="_blank" rel="noreferrer">WhatsApp</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="agent-card reveal">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=900&q=80" alt="Family homes consultant" />
+                <div class="agent-body">
+                  <h3>Tolu Wright</h3>
+                  <p class="agent-role">Family Homes & Relocation Expert</p>
+                  <p>License No: RE-LAG-19231</p>
+                  <p>Guides executives and families toward secure estates, school access, and lifestyle-ready neighborhoods.</p>
+                  <div class="mini-sales">
+                    <span>Recent Sales</span>
+                    <div class="sales-track">
+                      <span>Lekki Family Home — ₦240M</span>
+                      <span>Chevron Duplex — ₦185M</span>
+                    </div>
+                  </div>
+                  <div class="agent-links">
+                    <a href="#contact">Book Consultation</a>
+                    <a href="https://wa.me/2348000000000" target="_blank" rel="noreferrer">WhatsApp</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section neighborhoods" id="neighborhoods">
+          <div class="container">
+            <div class="section-head reveal">
+              <div>
+                <span class="eyebrow">Neighborhood Guides</span>
+                <h2>Area insights that go beyond the listing photos</h2>
+              </div>
+            </div>
+
+            <div class="neighborhood-grid">
+              <article class="hood-card reveal">
+                <h3>Ikoyi</h3>
+                <p>Known for diplomatic-grade privacy, waterfront streets, elite schools, and premium security, Ikoyi remains one of the strongest addresses for prestige living and legacy ownership.</p>
+                <ul>
+                  <li>Top schools within 15–20 minutes</li>
+                  <li>Quick access to business districts</li>
+                  <li>Strong resale confidence</li>
+                </ul>
+              </article>
+              <article class="hood-card reveal">
+                <h3>Victoria Island</h3>
+                <p>Ideal for executives who value convenience, hospitality, and quick office access, Victoria Island blends upscale apartments, commerce, and premium lifestyle destinations.</p>
+                <ul>
+                  <li>Excellent restaurant and hotel density</li>
+                  <li>Prime apartment rental demand</li>
+                  <li>Fast links to business hubs</li>
+                </ul>
+              </article>
+              <article class="hood-card reveal">
+                <h3>Lekki Phase 1</h3>
+                <p>Popular with modern families and young professionals, Lekki Phase 1 offers estate living, leisure options, growing infrastructure, and balanced value for ownership and rental appeal.</p>
+                <ul>
+                  <li>Family-oriented gated communities</li>
+                  <li>Shopping, healthcare, and leisure access</li>
+                  <li>Strong medium-term appreciation potential</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section testimonial-band">
+          <div class="container testimonials-grid">
+            <article class="quote-card reveal">
+              <p>“Peeyash Estate helped us move from searching endlessly to securing the exact kind of home we wanted. The process felt polished, honest, and efficient from start to closing.”</p>
+              <strong>— Chioma &amp; Daniel, Buyers</strong>
+            </article>
+            <article class="quote-card reveal">
+              <p>“The quality of buyer screening and the way the team handled negotiation made a real difference. We sold above expectation without the usual stress.”</p>
+              <strong>— Mrs. Adebayo, Seller</strong>
+            </article>
+            <article class="quote-card reveal">
+              <p>“Their commercial advisory gave us clarity on yield, location, and tenant demand before we committed. It felt more strategic than a normal listing service.”</p>
+              <strong>— K. Ibrahim, Investor</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="section contact-section" id="contact">
+          <div class="container contact-grid">
+            <div class="contact-copy reveal">
+              <span class="eyebrow">Contact & Booking</span>
+              <h2>Request a valuation, schedule a viewing, or speak directly with an agent</h2>
+              <p>
+                Whether you are listing a premium property, relocating, or acquiring an investment asset, our team is prepared to respond with speed, market clarity, and a client-first approach.
+              </p>
+              <div class="contact-cards">
+                <article>
+                  <strong>Office Hours</strong>
+                  <span>Mon – Sat · 8:00 AM – 7:00 PM</span>
+                </article>
+                <article>
+                  <strong>WhatsApp</strong>
+                  <a href="https://wa.me/2348000000000" target="_blank" rel="noreferrer">Chat instantly with an agent</a>
+                </article>
+                <article>
+                  <strong>Email</strong>
+                  <span>hello@peeyashestate.com</span>
+                </article>
+              </div>
+            </div>
+
+            <form class="contact-form reveal">
+              <div class="form-grid">
+                <div class="field-group">
+                  <label for="fullName">Full Name</label>
+                  <input id="fullName" type="text" placeholder="Your full name" />
+                </div>
+                <div class="field-group">
+                  <label for="phone">Phone Number</label>
+                  <input id="phone" type="tel" placeholder="+234..." />
+                </div>
+                <div class="field-group">
+                  <label for="email">Email</label>
+                  <input id="email" type="email" placeholder="name@example.com" />
+                </div>
+                <div class="field-group">
+                  <label for="requestType">Request Type</label>
+                  <select id="requestType">
+                    <option>Property Viewing</option>
+                    <option>Valuation Request</option>
+                    <option>Property Sale Consultation</option>
+                    <option>Investment Advisory</option>
+                  </select>
+                </div>
+                <div class="field-group wide">
+                  <label for="propertyDetails">Property / Request Details</label>
+                  <textarea id="propertyDetails" rows="5" placeholder="Tell us the property type, area, budget, or details of the property you want valued."></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-gold">Submit Request</button>
+                <a href="https://wa.me/2348000000000?text=Hello%20Peeyash%20Estate%2C%20I%20want%20to%20book%20a%20viewing." class="btn btn-outline" target="_blank" rel="noreferrer">WhatsApp an Agent</a>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-grid">
+          <div>
+            <a href="index.html" class="brand footer-brand">
+              <span class="brand-mark">P</span>
+              <div>
+                <strong>Peeyash Estate</strong>
+                <small>Luxury Property Advisory</small>
+              </div>
+            </a>
+            <p>
+              Modern real estate presentation for residential, commercial, and investment-grade property transactions.
+            </p>
+          </div>
+          <div>
+            <h4>Explore</h4>
+            <a href="listings.html">Listings</a>
+            <a href="#agents">Agents</a>
+            <a href="#neighborhoods">Neighborhood Guides</a>
+          </div>
+          <div>
+            <h4>Services</h4>
+            <a href="#contact">Valuation</a>
+            <a href="#contact">Viewing Booking</a>
+            <a href="#insights">Market Reports</a>
+          </div>
+          <div>
+            <h4>Contact</h4>
+            <a href="mailto:hello@peeyashestate.com">hello@peeyashestate.com</a>
+            <a href="tel:+2348000000000">+234 800 000 0000</a>
+            <a href="https://wa.me/2348000000000" target="_blank" rel="noreferrer">WhatsApp</a>
+          </div>
+        </div>
+      </footer>
+
+      <nav class="bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html" class="active">Home</a>
+        <a href="listings.html">Listings</a>
+        <a href="#agents">Agents</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
