@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-paper text-ink font-sans;
+  }
+  ::selection {
+    @apply bg-signal text-white;
+  }
+}
+
+@layer components {
+  .mono-label {
+    @apply font-mono text-[11px] tracking-wider uppercase text-ink-muted;
+  }
+
+  .btn-solid {
+    @apply inline-flex items-center justify-center rounded bg-signal px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-signal-dark;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded border border-rule px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-ink;
+  }
+
+  .status-pill {
+    @apply mono-label inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1;
+  }
+  .status-pill--draft {
+    @apply border-rule text-ink-muted;
+  }
+  .status-pill--in_review {
+    @apply border-pending/40 text-pending;
+  }
+  .status-pill--published {
+    @apply border-verified/40 text-verified;
+  }
+  .status-pill--rejected {
+    @apply border-danger/40 text-danger;
+  }
+
+  /* Long-form article body content, rendered from Tiptap HTML */
+  .prose-article {
+    @apply font-body text-[19px] leading-[1.7] text-ink;
+  }
+  .prose-article p {
+    @apply mb-6;
+  }
+  .prose-article p:first-of-type::first-letter {
+    @apply float-left font-display text-[64px] font-semibold leading-[0.8] pr-2 pt-1;
+  }
+  .prose-article h2 {
+    @apply font-display text-[26px] font-semibold mt-10 mb-4;
+  }
+  .prose-article img {
+    @apply my-8 rounded;
+  }
+  .prose-article a {
+    @apply underline decoration-signal decoration-2 underline-offset-2;
+  }
+}
