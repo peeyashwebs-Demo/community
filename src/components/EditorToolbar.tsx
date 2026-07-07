@@ -37,7 +37,7 @@ function ToolbarButton({
       disabled={disabled}
       title={label}
       aria-label={label}
-      className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded transition-colors ${
+      className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded transition-colors sm:h-9 sm:w-9 ${
         active ? "bg-ink text-paper" : "text-ink-muted hover:bg-paper hover:text-ink"
       } disabled:opacity-30`}
     >
@@ -47,7 +47,7 @@ function ToolbarButton({
 }
 
 function Divider() {
-  return <div className="mx-1 h-5 w-px flex-shrink-0 bg-rule" />;
+  return <div className="mx-0.5 h-5 w-px flex-shrink-0 bg-rule sm:mx-1" />;
 }
 
 export function EditorToolbar({ editor }: { editor: Editor | null }) {
@@ -70,7 +70,7 @@ export function EditorToolbar({ editor }: { editor: Editor | null }) {
   }
 
   return (
-    <div className="flex items-center gap-0.5 overflow-x-auto border-b border-rule bg-paper/60 px-3 py-2">
+    <div className="flex flex-wrap items-center gap-0.5 border-b border-rule bg-paper/60 px-2 py-2 sm:gap-1 sm:px-3">
       <ToolbarButton
         label="Bold"
         active={editor.isActive("bold")}

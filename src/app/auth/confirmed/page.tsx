@@ -18,7 +18,19 @@ export default function ConfirmedPage() {
     const supabase = createClient();
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
-      const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+
+      let { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+
+      // If they picked "Writer" before going to Google, apply it now — but
+      // only if they're still a plain reader, so this can never silently
+      // change an existing account's role on an ordinary login.
+      const pendingRole = sessionStorage.getItem("pending_requested_role");
+      if (pendingRole === "writer" && profile?.role === "reader") {
+        const { error } = await supabase.from("profiles").update({ role: "writer" }).eq("id", user.id);
+        if (!error) profile = { ...profile, role: "writer" };
+      }
+      sessionStorage.removeItem("pending_requested_role");
+
       setRole(profile?.role ?? null);
     });
   }, [status]);

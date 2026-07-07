@@ -64,7 +64,7 @@ export function HomeHero({ storyCount, writerCount }: { storyCount: number; writ
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mb-5 max-w-4xl font-display text-4xl font-semibold leading-[1.1] text-white sm:text-6xl md:text-7xl"
+          className="mb-5 max-w-4xl font-display text-[34px] font-semibold leading-[1.1] text-white sm:text-6xl md:text-7xl"
         >
           Where the community
           <br />

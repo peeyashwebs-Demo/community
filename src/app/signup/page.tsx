@@ -109,19 +109,6 @@ export default function SignupPage() {
         </h1>
       </div>
 
-      <div className="mx-auto mb-8 max-w-sm">
-        <GoogleSignInButton />
-        <p className="mt-2 text-center text-xs text-ink-muted">
-          Joins as a reader — ask an editor to make you a writer anytime.
-        </p>
-      </div>
-
-      <div className="mx-auto mb-10 flex max-w-sm items-center gap-3">
-        <div className="h-px flex-1 bg-rule" />
-        <span className="mono-label">or choose how you'll use The Gist</span>
-        <div className="h-px flex-1 bg-rule" />
-      </div>
-
       <div className="mb-10 grid gap-4 sm:grid-cols-3">
         {ROLES.map((r) => (
           <motion.button
@@ -241,6 +228,19 @@ export default function SignupPage() {
                   {loading ? "Creating account…" : `Create ${selected} account`}
                 </motion.button>
               </form>
+
+              <div className="my-6 flex items-center gap-3">
+                <div className="h-px flex-1 bg-rule" />
+                <span className="mono-label">or</span>
+                <div className="h-px flex-1 bg-rule" />
+              </div>
+
+              <GoogleSignInButton intendedRole={selected} />
+              {selected === "writer" && (
+                <p className="mt-2 text-center text-xs text-ink-muted">
+                  You'll join as a writer, same as filling in the form above.
+                </p>
+              )}
             </div>
           </motion.div>
         )}

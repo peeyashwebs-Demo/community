@@ -3,12 +3,22 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-export function GoogleSignInButton() {
+export function GoogleSignInButton({ intendedRole }: { intendedRole?: "reader" | "writer" }) {
   const [loading, setLoading] = useState(false);
   const supabase = createClient();
 
   async function handleClick() {
     setLoading(true);
+
+    // Google's OAuth redirect can't carry our custom "which role did they
+    // pick" data the way our own signup form's metadata can — so we stash it
+    // here and pick it back up once the user lands back on our site.
+    if (intendedRole === "writer") {
+      sessionStorage.setItem("pending_requested_role", "writer");
+    } else {
+      sessionStorage.removeItem("pending_requested_role");
+    }
+
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {

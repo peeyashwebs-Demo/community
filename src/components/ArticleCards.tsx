@@ -29,7 +29,7 @@ export function FeaturedCard({ article }: { article: Article }) {
             }}
           />
         </div>
-        <h1 className="mb-3 font-display text-3xl font-semibold leading-tight transition-colors sm:text-4xl group-hover:text-signal">
+        <h1 className="mb-3 font-display text-2xl font-semibold leading-[1.15] transition-colors sm:text-4xl group-hover:text-signal">
           {article.title}
         </h1>
       </Link>

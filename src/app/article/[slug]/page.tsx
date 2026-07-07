@@ -62,7 +62,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         </a>
       )}
 
-      <h1 className="mb-5 font-display text-4xl font-semibold leading-tight sm:text-5xl">
+      <h1 className="mb-5 font-display text-[28px] font-semibold leading-[1.15] sm:text-4xl md:text-5xl">
         {a.title}
       </h1>
 
