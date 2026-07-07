@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { attachAuthors } from "@/lib/relations";
 import type { Article } from "@/types/database";
@@ -49,7 +50,11 @@ export default async function AdminDashboard() {
       <h2 className="mb-4 font-display text-xl font-semibold">Top stories by reads</h2>
       <div className="divide-y divide-rule border-y border-rule">
         {top.map((a, i) => (
-          <div key={a.id} className="flex items-center justify-between py-4">
+          <Link
+            href={`/article/${a.slug}`}
+            key={a.id}
+            className="flex items-center justify-between py-4 transition-colors hover:bg-paper"
+          >
             <div className="flex items-center gap-4">
               <span className="font-mono text-2xl text-rule">{String(i + 1).padStart(2, "0")}</span>
               <div>
@@ -58,7 +63,7 @@ export default async function AdminDashboard() {
               </div>
             </div>
             <span className="mono-label">{a.read_count.toLocaleString()} reads</span>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

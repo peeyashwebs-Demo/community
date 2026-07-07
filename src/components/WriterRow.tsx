@@ -25,6 +25,20 @@ export function WriterRow({ profile }: { profile: Profile }) {
     router.refresh();
   }
 
+  async function promoteToEditor() {
+    if (
+      !window.confirm(
+        `Make ${profile.name} an editor? They'll be able to publish, reject, and moderate any story or comment on the site.`
+      )
+    ) {
+      return;
+    }
+    setBusy(true);
+    await supabase.from("profiles").update({ role: "editor" }).eq("id", profile.id);
+    setBusy(false);
+    router.refresh();
+  }
+
   return (
     <div className="flex flex-col gap-3 border-b border-rule py-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0">
@@ -38,6 +52,11 @@ export function WriterRow({ profile }: { profile: Profile }) {
         {profile.role === "reader" && (
           <button onClick={promoteToWriter} disabled={busy} className="btn-ghost">
             Invite as writer
+          </button>
+        )}
+        {profile.role !== "editor" && (
+          <button onClick={promoteToEditor} disabled={busy} className="btn-ghost">
+            Make editor
           </button>
         )}
         {profile.role !== "editor" && (
