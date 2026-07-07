@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { CommentForm } from "@/components/CommentForm";
+import { LikeButton } from "@/components/LikeButton";
 import type { Article, Comment } from "@/types/database";
 
 export const dynamic = "force-dynamic";
@@ -31,16 +32,21 @@ export default async function ArticlePage({ params }: { params: { slug: string }
   // Fire-and-forget atomic increment — doesn't block the render.
   supabase.rpc("increment_read_count", { article_slug: params.slug }).then(() => {});
 
-  const { data: comments } = await supabase
-    .from("comments")
-    .select("*, author:profiles(*)")
-    .eq("article_id", a.id)
-    .eq("status", "visible")
-    .order("created_at", { ascending: true });
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const [{ data: comments }, { data: likeRow }] = await Promise.all([
+    supabase
+      .from("comments")
+      .select("*, author:profiles(*)")
+      .eq("article_id", a.id)
+      .eq("status", "visible")
+      .order("created_at", { ascending: true }),
+    user
+      ? supabase.from("likes").select("article_id").eq("article_id", a.id).eq("user_id", user.id).maybeSingle()
+      : Promise.resolve({ data: null }),
+  ]);
 
   const commentList = (comments ?? []) as unknown as Comment[];
 
@@ -62,6 +68,15 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         <span>{readTime(a.body)} min read</span>
         <span>·</span>
         <span>{formatDate(a.published_at)}</span>
+      </div>
+
+      <div className="mb-8">
+        <LikeButton
+          articleId={a.id}
+          initialCount={a.like_count}
+          initiallyLiked={!!likeRow}
+          isSignedIn={!!user}
+        />
       </div>
 
       {a.cover_image_url && (

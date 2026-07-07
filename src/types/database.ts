@@ -34,6 +34,7 @@ export interface Article {
   author_id: string;
   category_id: string | null;
   read_count: number;
+  like_count: number;
   review_note: string | null;
   published_at: string | null;
   created_at: string;
@@ -63,6 +64,23 @@ export interface ReviewLog {
   created_at: string;
 }
 
+export interface Like {
+  article_id: string;
+  user_id: string;
+  created_at: string;
+}
+
+export interface Feedback {
+  id: string;
+  user_id: string | null;
+  name: string;
+  email: string | null;
+  message: string;
+  rating: number | null;
+  status: "new" | "reviewed";
+  created_at: string;
+}
+
 // Bare table shapes (no joined fields) — what Postgres actually stores per row.
 type ArticleRow = Omit<Article, "author" | "category" | "tags">;
 type CommentRow = Omit<Comment, "author">;
@@ -87,6 +105,8 @@ export interface Database {
       article_tags: Table<ArticleTagRow>;
       comments: Table<CommentRow>;
       review_logs: Table<ReviewLog>;
+      feedback: Table<Feedback>;
+      likes: Table<Like>;
     };
     Views: {};
     Functions: {
@@ -97,6 +117,14 @@ export interface Database {
       current_role: {
         Args: Record<PropertyKey, never>;
         Returns: UserRole;
+      };
+      claim_first_editor: {
+        Args: Record<PropertyKey, never>;
+        Returns: boolean;
+      };
+      toggle_like: {
+        Args: { p_article_id: string };
+        Returns: boolean;
       };
     };
     Enums: {};

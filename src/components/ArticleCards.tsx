@@ -36,6 +36,12 @@ export function FeaturedCard({ article }: { article: Article }) {
         <span>{readTime(article.body)} min read</span>
         <span>·</span>
         <span>{formatDate(article.published_at)}</span>
+        {article.like_count > 0 && (
+          <>
+            <span>·</span>
+            <span>♥ {article.like_count}</span>
+          </>
+        )}
       </div>
     </article>
   );

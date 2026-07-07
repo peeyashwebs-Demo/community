@@ -49,7 +49,7 @@ export function ReviewQueueItem({ article }: { article: Article }) {
 
   return (
     <div className="border-b border-rule py-6">
-      <div className="flex items-start justify-between gap-6">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
         <div className="min-w-0 flex-1">
           <p className="mono-label mb-1.5">By {article.author?.name ?? "Unknown"}</p>
           <h3 className="mb-2 font-display text-xl font-semibold">
@@ -69,21 +69,21 @@ export function ReviewQueueItem({ article }: { article: Article }) {
           )}
         </div>
 
-        <div className="flex flex-shrink-0 flex-col gap-2">
-          <button onClick={approve} disabled={busy} className="btn-solid whitespace-nowrap">
+        <div className="flex w-full flex-row gap-2 sm:w-auto sm:flex-shrink-0 sm:flex-col">
+          <button onClick={approve} disabled={busy} className="btn-solid flex-1 whitespace-nowrap sm:flex-none">
             Approve
           </button>
           <button
             onClick={() => setPendingAction("request_changes")}
             disabled={busy}
-            className="btn-ghost whitespace-nowrap"
+            className="btn-ghost flex-1 whitespace-nowrap sm:flex-none"
           >
-            Request changes
+            Changes
           </button>
           <button
             onClick={() => setPendingAction("reject")}
             disabled={busy}
-            className="whitespace-nowrap rounded border border-danger/30 px-4 py-2.5 text-sm font-semibold text-danger hover:bg-danger/5"
+            className="flex-1 whitespace-nowrap rounded border border-danger/30 px-4 py-2.5 text-sm font-semibold text-danger hover:bg-danger/5 sm:flex-none"
           >
             Reject
           </button>
