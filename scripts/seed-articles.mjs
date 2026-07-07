@@ -50,6 +50,29 @@ const seedData = JSON.parse(readFileSync(join(__dirname, "seed-data.json"), "utf
 async function main() {
   console.log(`Seeding ${seedData.writers.length} writers and ${seedData.articles.length} articles...\n`);
 
+  // ---- Preflight: make sure 0001_init.sql actually ran ----
+  const { data: catCheck, error: catCheckError } = await supabase.from("categories").select("id").limit(1);
+  if (catCheckError) {
+    console.error(
+      "\nCouldn't query the categories table at all:\n  " +
+        catCheckError.message +
+        "\n\nThis almost always means 0001_init.sql hasn't been run yet in the Supabase SQL editor " +
+        "(it creates every table, including categories). Run that first, then try again.\n"
+    );
+    process.exit(1);
+  }
+  if (!catCheck || catCheck.length === 0) {
+    console.error(
+      "\nThe categories table exists but is empty. 0001_init.sql seeds 6 categories at the bottom " +
+        "of that file — if you ran an older/partial copy of it, that seed insert may be missing. " +
+        "Run this in the SQL editor to add them:\n\n" +
+        "  insert into categories (name, slug) values\n" +
+        "    ('Politics', 'politics'), ('Culture', 'culture'), ('Business', 'business'),\n" +
+        "    ('Campus', 'campus'), ('Opinion', 'opinion'), ('Sports', 'sports');\n"
+    );
+    process.exit(1);
+  }
+
   // ---- Writers ----
   const writerIdByEmail = {};
 
@@ -71,7 +94,8 @@ async function main() {
         userId = existing?.id;
         console.log(`  ${writer.name} already exists, reusing account.`);
       } else {
-        console.error(`  Failed to create ${writer.name}:`, createError.message);
+        console.error(`  Failed to create ${writer.name}. Full error details:`);
+        console.error("   ", JSON.stringify(createError, null, 2));
         continue;
       }
     } else {

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { attachAuthors, attachCategories } from "@/lib/relations";
 import { CommentForm } from "@/components/CommentForm";
 import { LikeButton } from "@/components/LikeButton";
 import { RevealSection } from "@/components/RevealSection";
@@ -20,15 +21,17 @@ function formatDate(iso: string | null) {
 export default async function ArticlePage({ params }: { params: { slug: string } }) {
   const supabase = createClient();
 
-  const { data: article } = await supabase
+  const { data: articleRaw } = await supabase
     .from("articles")
-    .select("*, author:profiles(*), category:categories(*)")
+    .select("*")
     .eq("slug", params.slug)
     .eq("status", "published")
     .single();
 
-  if (!article) notFound();
-  const a = article as unknown as Article;
+  if (!articleRaw) notFound();
+
+  const [withAuthor] = await attachAuthors(supabase, [articleRaw as Article]);
+  const [a] = await attachCategories(supabase, [withAuthor]);
 
   // Fire-and-forget atomic increment — doesn't block the render.
   supabase.rpc("increment_read_count", { article_slug: params.slug }).then(() => {});
@@ -37,10 +40,10 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     data: { user },
   } = await supabase.auth.getUser();
 
-  const [{ data: comments }, { data: likeRow }] = await Promise.all([
+  const [{ data: commentsRaw }, { data: likeRow }] = await Promise.all([
     supabase
       .from("comments")
-      .select("*, author:profiles(*)")
+      .select("*")
       .eq("article_id", a.id)
       .eq("status", "visible")
       .order("created_at", { ascending: true }),
@@ -49,7 +52,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       : Promise.resolve({ data: null }),
   ]);
 
-  const commentList = (comments ?? []) as unknown as Comment[];
+  const commentList = await attachAuthors(supabase, (commentsRaw ?? []) as Comment[]);
 
   return (
     <main className="mx-auto max-w-article px-6 py-10 sm:px-0">

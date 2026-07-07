@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { attachAuthors } from "@/lib/relations";
 import type { Article } from "@/types/database";
 
 export const dynamic = "force-dynamic";
@@ -7,7 +8,7 @@ export default async function AdminDashboard() {
   const supabase = createClient();
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
-  const [{ count: publishedThisWeek }, { count: pendingCount }, { data: topStories }] =
+  const [{ count: publishedThisWeek }, { count: pendingCount }, { data: topStoriesRaw }] =
     await Promise.all([
       supabase
         .from("articles")
@@ -20,13 +21,13 @@ export default async function AdminDashboard() {
         .eq("status", "in_review"),
       supabase
         .from("articles")
-        .select("*, author:profiles(*)")
+        .select("*")
         .eq("status", "published")
         .order("read_count", { ascending: false })
         .limit(5),
     ]);
 
-  const top = (topStories ?? []) as unknown as Article[];
+  const top = await attachAuthors(supabase, (topStoriesRaw ?? []) as Article[]);
 
   return (
     <div>

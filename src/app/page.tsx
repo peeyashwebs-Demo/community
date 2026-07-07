@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { attachAuthors, attachCategories } from "@/lib/relations";
 import { FeaturedCard, LatestItem, MostReadItem } from "@/components/ArticleCards";
 import { HomeHero } from "@/components/HomeHero";
 import { RevealSection } from "@/components/RevealSection";
@@ -7,22 +8,20 @@ import type { Article, Category } from "@/types/database";
 
 export const dynamic = "force-dynamic";
 
-const ARTICLE_SELECT = "*, author:profiles(*), category:categories(*)";
-
 export default async function HomePage() {
   const supabase = createClient();
 
-  const [{ data: latest }, { data: mostRead }, { data: categories }, { count: storyCount }, { count: writerCount }] =
+  const [{ data: latestRaw }, { data: mostReadRaw }, { data: categories }, { count: storyCount }, { count: writerCount }] =
     await Promise.all([
       supabase
         .from("articles")
-        .select(ARTICLE_SELECT)
+        .select("*")
         .eq("status", "published")
         .order("published_at", { ascending: false })
         .limit(5),
       supabase
         .from("articles")
-        .select(ARTICLE_SELECT)
+        .select("*")
         .eq("status", "published")
         .order("read_count", { ascending: false })
         .limit(3),
@@ -31,10 +30,14 @@ export default async function HomePage() {
       supabase.from("profiles").select("*", { count: "exact", head: true }).in("role", ["writer", "editor"]),
     ]);
 
-  const articles = (latest ?? []) as unknown as Article[];
+  const latestWithAuthors = await attachAuthors(supabase, (latestRaw ?? []) as Article[]);
+  const articles = await attachCategories(supabase, latestWithAuthors);
+
+  const mostReadWithAuthors = await attachAuthors(supabase, (mostReadRaw ?? []) as Article[]);
+  const topRead = await attachCategories(supabase, mostReadWithAuthors);
+
   const featured = articles[0];
   const rest = articles.slice(1);
-  const topRead = (mostRead ?? []) as unknown as Article[];
   const cats = (categories ?? []) as Category[];
 
   return (

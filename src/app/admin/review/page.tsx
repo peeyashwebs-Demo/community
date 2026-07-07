@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { attachAuthors } from "@/lib/relations";
 import { ReviewQueueItem } from "@/components/ReviewQueueItem";
 import type { Article } from "@/types/database";
 
@@ -9,11 +10,11 @@ export default async function ReviewQueuePage() {
 
   const { data } = await supabase
     .from("articles")
-    .select("*, author:profiles(*)")
+    .select("*")
     .eq("status", "in_review")
     .order("created_at", { ascending: true });
 
-  const articles = (data ?? []) as unknown as Article[];
+  const articles = await attachAuthors(supabase, (data ?? []) as Article[]);
 
   if (articles.length === 0) {
     return (

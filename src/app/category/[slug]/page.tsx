@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { attachAuthors, attachCategories } from "@/lib/relations";
 import { LatestItem } from "@/components/ArticleCards";
 import type { Article } from "@/types/database";
 
@@ -16,14 +17,15 @@ export default async function CategoryPage({ params }: { params: { slug: string 
 
   if (!category) notFound();
 
-  const { data: articles } = await supabase
+  const { data: articlesRaw } = await supabase
     .from("articles")
-    .select("*, author:profiles(*), category:categories(*)")
+    .select("*")
     .eq("status", "published")
     .eq("category_id", category.id)
     .order("published_at", { ascending: false });
 
-  const list = (articles ?? []) as unknown as Article[];
+  const withAuthors = await attachAuthors(supabase, (articlesRaw ?? []) as Article[]);
+  const list = await attachCategories(supabase, withAuthors);
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-10 sm:px-10">

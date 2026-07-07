@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getProfile } from "@/lib/getProfile";
+import { attachCategories } from "@/lib/relations";
 import { StatusBadge } from "@/components/StatusBadge";
 import type { Article } from "@/types/database";
 
@@ -12,11 +13,11 @@ export default async function WriterDashboard() {
 
   const { data } = await supabase
     .from("articles")
-    .select("*, category:categories(*)")
+    .select("*")
     .eq("author_id", profile!.id)
     .order("updated_at", { ascending: false });
 
-  const articles = (data ?? []) as unknown as Article[];
+  const articles = await attachCategories(supabase, (data ?? []) as Article[]);
 
   if (articles.length === 0) {
     return (
