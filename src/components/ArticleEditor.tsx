@@ -6,8 +6,11 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import TiptapImage from "@tiptap/extension-image";
+import TiptapLink from "@tiptap/extension-link";
+import TiptapUnderline from "@tiptap/extension-underline";
 import { createClient } from "@/lib/supabase/client";
 import { StatusBadge } from "@/components/StatusBadge";
+import { EditorToolbar } from "@/components/EditorToolbar";
 import type { Article, Category } from "@/types/database";
 
 type SaveState = "saved" | "saving" | "error";
@@ -47,6 +50,11 @@ export function ArticleEditor({
       StarterKit,
       Placeholder.configure({ placeholder: "Start writing your story…" }),
       TiptapImage,
+      TiptapUnderline,
+      TiptapLink.configure({
+        openOnClick: false,
+        HTMLAttributes: { rel: "noopener noreferrer" },
+      }),
     ],
     content: article.body,
     editable: canEdit,
@@ -184,8 +192,11 @@ export function ArticleEditor({
         <img src={coverUrl} alt="" className="mb-8 aspect-video w-full rounded object-cover" />
       )}
 
-      <div className="mb-10 rounded border border-rule bg-surface p-6">
-        <EditorContent editor={editor} />
+      <div className="mb-10 overflow-hidden rounded border border-rule bg-surface">
+        {canEdit && <EditorToolbar editor={editor} />}
+        <div className="p-6">
+          <EditorContent editor={editor} />
+        </div>
       </div>
 
       {canEdit && (

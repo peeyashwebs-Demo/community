@@ -77,6 +77,22 @@
   .prose-article h2 {
     @apply font-display text-[26px] font-semibold mt-10 mb-4;
   }
+  .prose-article h3 {
+    @apply font-display text-[21px] font-semibold mt-8 mb-3;
+  }
+  .prose-article ul,
+  .prose-article ol {
+    @apply mb-6 ml-6 space-y-2;
+  }
+  .prose-article ul {
+    @apply list-disc;
+  }
+  .prose-article ol {
+    @apply list-decimal;
+  }
+  .prose-article blockquote {
+    @apply my-8 border-l-2 border-signal pl-5 font-body italic text-ink-muted;
+  }
   .prose-article img {
     @apply my-8 rounded;
   }
