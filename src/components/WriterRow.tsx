@@ -26,15 +26,15 @@ export function WriterRow({ profile }: { profile: Profile }) {
   }
 
   return (
-    <div className="flex items-center justify-between border-b border-rule py-4">
-      <div>
-        <p className="font-display font-medium">{profile.name}</p>
-        <p className="mono-label">
+    <div className="flex flex-col gap-3 border-b border-rule py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="min-w-0">
+        <p className="truncate font-display font-medium">{profile.name}</p>
+        <p className="mono-label truncate">
           {profile.email} · {profile.role}
           {profile.status === "suspended" && <span className="text-danger"> · suspended</span>}
         </p>
       </div>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {profile.role === "reader" && (
           <button onClick={promoteToWriter} disabled={busy} className="btn-ghost">
             Invite as writer

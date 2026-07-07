@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Fraunces, Source_Serif_4, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { Masthead } from "@/components/Masthead";
-import { getProfile } from "@/lib/getProfile";
+import { MastheadServer } from "@/components/MastheadServer";
+import { MastheadSkeleton } from "@/components/MastheadSkeleton";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -30,19 +31,15 @@ export const metadata: Metadata = {
   description: "A community newsroom: writer drafts, editorial review, public stories.",
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const profile = await getProfile();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
         className={`${fraunces.variable} ${sourceSerif.variable} ${inter.variable} ${plexMono.variable}`}
       >
-        <Masthead profile={profile} />
+        <Suspense fallback={<MastheadSkeleton />}>
+          <MastheadServer />
+        </Suspense>
         {children}
       </body>
     </html>

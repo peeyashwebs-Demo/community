@@ -147,7 +147,7 @@ export function ArticleEditor({
         onChange={(e) => setTitle(e.target.value)}
         disabled={!canEdit}
         placeholder="Your headline"
-        className="mb-6 w-full border-none bg-transparent font-display text-4xl font-semibold leading-tight outline-none placeholder:text-ink-muted/40 disabled:opacity-70"
+        className="mb-6 w-full border-none bg-transparent font-display text-2xl font-semibold leading-tight outline-none placeholder:text-ink-muted/40 disabled:opacity-70 sm:text-4xl"
       />
 
       <div className="mb-6 flex flex-wrap gap-4">

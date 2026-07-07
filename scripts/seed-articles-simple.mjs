@@ -86,6 +86,7 @@ async function main() {
         category_id: categoryId,
         read_count: article.read_count,
         like_count: Math.floor(article.read_count * (0.03 + Math.random() * 0.05)),
+        cover_image_url: article.cover_image_url,
         published_at: publishedAt,
         created_at: publishedAt,
         updated_at: publishedAt,

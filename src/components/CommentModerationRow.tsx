@@ -31,7 +31,7 @@ export function CommentModerationRow({ comment }: { comment: Comment }) {
         {comment.status}
       </div>
       <p className="mb-3 text-[15px]">{comment.body}</p>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {comment.status !== "hidden" && (
           <button onClick={() => setStatus("hidden")} disabled={busy} className="btn-ghost">
             Hide

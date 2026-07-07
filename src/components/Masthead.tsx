@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Profile } from "@/types/database";
-import { SignOutButton } from "@/components/SignOutButton";
+import { AccountMenu } from "@/components/AccountMenu";
 import { MobileMenu } from "@/components/MobileMenu";
 
 const NAV_CATEGORIES = [
@@ -44,7 +44,7 @@ export function Masthead({ profile }: { profile: Profile | null }) {
         {profile?.role === "editor" && <span>Signed in as editor</span>}
         {profile?.role === "writer" && <span>Signed in as writer</span>}
       </div>
-      <div className="flex items-center justify-between px-6 py-4 sm:py-5 sm:px-10">
+      <div className="flex items-center justify-between px-4 py-4 sm:px-10 sm:py-5">
         <Link href="/" className="group flex items-center font-display text-2xl font-bold tracking-tight sm:text-3xl">
           The{" "}
           <motion.span
@@ -56,7 +56,7 @@ export function Masthead({ profile }: { profile: Profile | null }) {
           </motion.span>
         </Link>
 
-        <nav className="hidden gap-7 md:flex">
+        <nav className="hidden gap-7 lg:flex">
           {NAV_CATEGORIES.map((c) => (
             <Link
               key={c.slug}
@@ -74,7 +74,7 @@ export function Masthead({ profile }: { profile: Profile | null }) {
           </Link>
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           {!profile && (
             <>
               <Link href="/login" className="btn-ghost">
@@ -86,20 +86,14 @@ export function Masthead({ profile }: { profile: Profile | null }) {
             </>
           )}
 
-          {/* Writers AND editors both get the same prominent "write" CTA. */}
+          {/* One clear priority action per role, plus the account menu for everything else. */}
           {profile && (profile.role === "writer" || profile.role === "editor") && (
-            <Link href="/writer" className="btn-solid">
-              ✎ Write
+            <Link href={profile.role === "editor" ? "/admin/review" : "/writer/new"} className="btn-solid">
+              {profile.role === "editor" ? "Review queue" : "✎ Write"}
             </Link>
           )}
 
-          {profile?.role === "editor" && (
-            <Link href="/admin" className="btn-ghost">
-              Admin
-            </Link>
-          )}
-
-          {profile && <SignOutButton />}
+          {profile && <AccountMenu profile={profile} />}
         </div>
 
         <MobileMenu profile={profile} />
