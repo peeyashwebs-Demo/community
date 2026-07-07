@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import type { Profile } from "@/types/database";
 import { SignOutButton } from "@/components/SignOutButton";
 import { MobileMenu } from "@/components/MobileMenu";
@@ -12,6 +16,17 @@ const NAV_CATEGORIES = [
 ];
 
 export function Masthead({ profile }: { profile: Profile | null }) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
@@ -19,15 +34,26 @@ export function Masthead({ profile }: { profile: Profile | null }) {
   });
 
   return (
-    <header className="sticky top-0 z-20 border-b border-rule bg-paper">
-      <div className="mono-label hidden justify-between border-b border-rule px-6 py-2 sm:flex sm:px-10">
+    <header
+      className={`sticky top-0 z-20 border-b transition-all duration-300 ${
+        scrolled ? "glass-nav border-rule shadow-[0_4px_20px_rgba(20,23,28,0.06)]" : "border-transparent bg-paper"
+      }`}
+    >
+      <div className="mono-label hidden justify-between border-b border-rule/60 px-6 py-2 sm:flex sm:px-10">
         <span>{today}</span>
         {profile?.role === "editor" && <span>Signed in as editor</span>}
         {profile?.role === "writer" && <span>Signed in as writer</span>}
       </div>
       <div className="flex items-center justify-between px-6 py-4 sm:py-5 sm:px-10">
-        <Link href="/" className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-          The <span className="text-signal">Gist</span>
+        <Link href="/" className="group flex items-center font-display text-2xl font-bold tracking-tight sm:text-3xl">
+          The{" "}
+          <motion.span
+            className="ml-1.5 text-signal"
+            whileHover={{ rotate: [-2, 2, -2, 0] }}
+            transition={{ duration: 0.4 }}
+          >
+            Gist
+          </motion.span>
         </Link>
 
         <nav className="hidden gap-7 md:flex">
@@ -35,14 +61,14 @@ export function Masthead({ profile }: { profile: Profile | null }) {
             <Link
               key={c.slug}
               href={`/category/${c.slug}`}
-              className="text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+              className="relative text-sm font-medium text-ink-muted transition-colors hover:text-ink after:absolute after:-bottom-1 after:left-0 after:h-[1.5px] after:w-0 after:bg-signal after:transition-all after:duration-300 hover:after:w-full"
             >
               {c.name}
             </Link>
           ))}
           <Link
             href="/feedback"
-            className="text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+            className="relative text-sm font-medium text-ink-muted transition-colors hover:text-ink after:absolute after:-bottom-1 after:left-0 after:h-[1.5px] after:w-0 after:bg-signal after:transition-all after:duration-300 hover:after:w-full"
           >
             Feedback
           </Link>
@@ -60,10 +86,7 @@ export function Masthead({ profile }: { profile: Profile | null }) {
             </>
           )}
 
-          {/* Writers AND editors both get the same prominent "write" CTA —
-              this is the fix for "nowhere to write": it's a solid button,
-              not a quiet link, and it's always visible once you're signed in
-              as either role. */}
+          {/* Writers AND editors both get the same prominent "write" CTA. */}
           {profile && (profile.role === "writer" || profile.role === "editor") && (
             <Link href="/writer" className="btn-solid">
               ✎ Write

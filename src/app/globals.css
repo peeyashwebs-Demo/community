@@ -17,11 +17,11 @@
   }
 
   .btn-solid {
-    @apply inline-flex items-center justify-center rounded bg-signal px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-signal-dark;
+    @apply inline-flex items-center justify-center rounded bg-signal px-4 py-2.5 text-sm font-semibold text-white shadow-[0_1px_2px_rgba(178,58,46,0.25)] transition-all duration-200 hover:-translate-y-[1px] hover:bg-signal-dark hover:shadow-[0_6px_16px_rgba(178,58,46,0.28)] active:translate-y-0;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded border border-rule px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-ink;
+    @apply inline-flex items-center justify-center rounded border border-rule px-4 py-2.5 text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-[1px] hover:border-ink hover:shadow-[0_4px_12px_rgba(20,23,28,0.08)] active:translate-y-0;
   }
 
   .status-pill {
@@ -38,6 +38,30 @@
   }
   .status-pill--rejected {
     @apply border-danger/40 text-danger;
+  }
+
+  /* Glass masthead — used once scrolled, layered over a subtle blur */
+  .glass-nav {
+    @apply bg-paper/80 backdrop-blur-md;
+  }
+
+  /* Immersive hero mesh background */
+  .hero-mesh {
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(178, 58, 46, 0.10), transparent 40%),
+      radial-gradient(circle at 85% 0%, rgba(47, 111, 94, 0.10), transparent 45%),
+      radial-gradient(circle at 50% 100%, rgba(178, 58, 46, 0.06), transparent 50%);
+  }
+
+  /* Card lift — used on feed cards, most-read items, etc. */
+  .card-lift {
+    @apply transition-all duration-300 hover:-translate-y-1;
+  }
+  .card-lift img {
+    @apply transition-transform duration-500;
+  }
+  .card-lift:hover img {
+    @apply scale-[1.04];
   }
 
   /* Long-form article body content, rendered from Tiptap HTML */

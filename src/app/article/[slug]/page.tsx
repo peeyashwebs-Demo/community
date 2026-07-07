@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { CommentForm } from "@/components/CommentForm";
 import { LikeButton } from "@/components/LikeButton";
+import { RevealSection } from "@/components/RevealSection";
 import type { Article, Comment } from "@/types/database";
 
 export const dynamic = "force-dynamic";
@@ -91,22 +92,24 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 
       <hr className="my-12 border-rule" />
 
-      <h2 className="mb-6 font-display text-xl font-semibold">
-        {commentList.length} {commentList.length === 1 ? "Comment" : "Comments"}
-      </h2>
+      <RevealSection>
+        <h2 className="mb-6 font-display text-xl font-semibold">
+          {commentList.length} {commentList.length === 1 ? "Comment" : "Comments"}
+        </h2>
 
-      <CommentForm articleId={a.id} isSignedIn={!!user} />
+        <CommentForm articleId={a.id} isSignedIn={!!user} />
 
-      <div className="space-y-6">
-        {commentList.map((c) => (
-          <div key={c.id} className="border-b border-rule pb-6">
-            <div className="mono-label mb-2">
-              {c.author?.name ?? "Reader"} · {formatDate(c.created_at)}
+        <div className="space-y-6">
+          {commentList.map((c) => (
+            <div key={c.id} className="border-b border-rule pb-6">
+              <div className="mono-label mb-2">
+                {c.author?.name ?? "Reader"} · {formatDate(c.created_at)}
+              </div>
+              <p className="text-[15px] leading-relaxed">{c.body}</p>
             </div>
-            <p className="text-[15px] leading-relaxed">{c.body}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </RevealSection>
     </main>
   );
 }

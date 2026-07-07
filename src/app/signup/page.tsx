@@ -64,20 +64,13 @@ export default function SignupPage() {
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } },
+      options: { data: { name, requested_role: selected } },
     });
     setLoading(false);
 
     if (signUpError) {
       setError(signUpError.message);
       return;
-    }
-
-    // "writer" applications are granted immediately — matches the brief's
-    // "writers sign in to a personal workspace" flow. Editor is never
-    // self-assignable here; it stays a `reader` until an editor promotes it.
-    if (selected === "writer" && data.user) {
-      await supabase.from("profiles").update({ role: "writer" }).eq("id", data.user.id);
     }
 
     setDone(true);
