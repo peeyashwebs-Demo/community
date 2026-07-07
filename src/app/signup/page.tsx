@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 
 type RoleChoice = "reader" | "writer" | "editor";
 
@@ -64,7 +65,10 @@ export default function SignupPage() {
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name, requested_role: selected } },
+      options: {
+        data: { name, requested_role: selected },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
     setLoading(false);
 
@@ -103,6 +107,19 @@ export default function SignupPage() {
         <h1 className="font-display text-3xl font-semibold sm:text-4xl">
           What brings you here?
         </h1>
+      </div>
+
+      <div className="mx-auto mb-8 max-w-sm">
+        <GoogleSignInButton />
+        <p className="mt-2 text-center text-xs text-ink-muted">
+          Joins as a reader — ask an editor to make you a writer anytime.
+        </p>
+      </div>
+
+      <div className="mx-auto mb-10 flex max-w-sm items-center gap-3">
+        <div className="h-px flex-1 bg-rule" />
+        <span className="mono-label">or choose how you'll use The Gist</span>
+        <div className="h-px flex-1 bg-rule" />
       </div>
 
       <div className="mb-10 grid gap-4 sm:grid-cols-3">

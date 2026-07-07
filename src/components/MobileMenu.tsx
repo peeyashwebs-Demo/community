@@ -107,6 +107,7 @@ export function MobileMenu({ profile }: { profile: Profile | null }) {
 
                 <div className="border-b border-rule pb-3">
                   <SectionLabel>Browse</SectionLabel>
+                  <Item href="/" onClick={close}>Home</Item>
                   <div className="grid grid-cols-2 gap-1">
                     {NAV_CATEGORIES.map((c) => (
                       <Item key={c.slug} href={`/category/${c.slug}`} onClick={close}>

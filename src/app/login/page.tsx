@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 
 const ROLE_INFO = {
   reader: { label: "Reader", blurb: "Read stories, comment, follow topics." },
@@ -201,6 +202,14 @@ export default function LoginPage() {
                     {loading ? "Signing in…" : "Sign in"}
                   </motion.button>
                 </form>
+
+                <div className="my-6 flex items-center gap-3">
+                  <div className="h-px flex-1 bg-rule" />
+                  <span className="mono-label">or</span>
+                  <div className="h-px flex-1 bg-rule" />
+                </div>
+
+                <GoogleSignInButton />
 
                 <div className="mb-7 mt-7 flex gap-2.5 rounded border border-rule bg-surface p-3.5">
                   <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-verified" />

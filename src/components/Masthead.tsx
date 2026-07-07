@@ -57,6 +57,12 @@ export function Masthead({ profile }: { profile: Profile | null }) {
         </Link>
 
         <nav className="hidden gap-7 lg:flex">
+          <Link
+            href="/"
+            className="relative text-sm font-medium text-ink-muted transition-colors hover:text-ink after:absolute after:-bottom-1 after:left-0 after:h-[1.5px] after:w-0 after:bg-signal after:transition-all after:duration-300 hover:after:w-full"
+          >
+            Home
+          </Link>
           {NAV_CATEGORIES.map((c) => (
             <Link
               key={c.slug}
