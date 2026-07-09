@@ -64,39 +64,54 @@
     @apply scale-[1.04];
   }
 
-  /* Long-form article body content, rendered from Tiptap HTML */
-  .prose-article {
+  /* Long-form article body content, rendered from Tiptap HTML.
+     prose-article = published reading view (has the drop-cap first letter).
+     prose-editor  = the writer's editor (same typography, no drop-cap — a
+     64px letter ballooning as you type your first word is disorienting,
+     not "reading experience," so it's deliberately left out here). */
+  .prose-article,
+  .prose-editor {
     @apply font-body text-[19px] leading-[1.7] text-ink;
   }
-  .prose-article p {
+  .prose-article p,
+  .prose-editor p {
     @apply mb-6;
   }
   .prose-article p:first-of-type::first-letter {
     @apply float-left font-display text-[64px] font-semibold leading-[0.8] pr-2 pt-1;
   }
-  .prose-article h2 {
+  .prose-article h2,
+  .prose-editor h2 {
     @apply font-display text-[26px] font-semibold mt-10 mb-4;
   }
-  .prose-article h3 {
+  .prose-article h3,
+  .prose-editor h3 {
     @apply font-display text-[21px] font-semibold mt-8 mb-3;
   }
   .prose-article ul,
-  .prose-article ol {
+  .prose-article ol,
+  .prose-editor ul,
+  .prose-editor ol {
     @apply mb-6 ml-6 space-y-2;
   }
-  .prose-article ul {
+  .prose-article ul,
+  .prose-editor ul {
     @apply list-disc;
   }
-  .prose-article ol {
+  .prose-article ol,
+  .prose-editor ol {
     @apply list-decimal;
   }
-  .prose-article blockquote {
+  .prose-article blockquote,
+  .prose-editor blockquote {
     @apply my-8 border-l-2 border-signal pl-5 font-body italic text-ink-muted;
   }
-  .prose-article img {
+  .prose-article img,
+  .prose-editor img {
     @apply my-8 rounded;
   }
-  .prose-article a {
+  .prose-article a,
+  .prose-editor a {
     @apply underline decoration-signal decoration-2 underline-offset-2;
   }
 

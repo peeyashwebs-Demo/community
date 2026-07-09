@@ -60,7 +60,7 @@ export function ArticleEditor({
     editable: canEdit,
     editorProps: {
       attributes: {
-        class: "prose-article min-h-[400px] outline-none",
+        class: "prose-editor min-h-[400px] outline-none",
       },
     },
     onUpdate: () => scheduleSave(),
