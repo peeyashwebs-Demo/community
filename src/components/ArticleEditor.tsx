@@ -41,6 +41,7 @@ export function ArticleEditor({
   const [saveState, setSaveState] = useState<SaveState>("saved");
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [activeLinkHref, setActiveLinkHref] = useState<string | null>(null);
 
   const canEdit = article.status === "draft" || article.status === "rejected";
   const saveTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -65,6 +66,9 @@ export function ArticleEditor({
       },
     },
     onUpdate: () => scheduleSave(),
+    onSelectionUpdate: ({ editor }) => {
+      setActiveLinkHref(editor.isActive("link") ? editor.getAttributes("link").href : null);
+    },
   });
 
   const scheduleSave = useCallback(() => {
@@ -125,20 +129,6 @@ export function ArticleEditor({
       .eq("id", article.id);
     setSubmitting(false);
     if (!error) router.push("/writer");
-  }
-
-  // The editor deliberately doesn't navigate on a plain click on a link —
-  // that would blow away your place in the draft. Ctrl/Cmd+click is the
-  // standard editor convention (Notion, Google Docs, etc.) for "open this to
-  // check it works" without that risk.
-  function handleEditorClick(e: React.MouseEvent<HTMLDivElement>) {
-    if (!e.metaKey && !e.ctrlKey) return;
-    const link = (e.target as HTMLElement).closest("a");
-    if (!link) return;
-    const href = link.getAttribute("href");
-    if (!href) return;
-    e.preventDefault();
-    window.open(href, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -211,12 +201,22 @@ export function ArticleEditor({
         {canEdit && (
           <>
             <EditorToolbar editor={editor} articleId={article.id} authorId={article.author_id} />
-            <p className="mono-label border-b border-rule bg-paper/40 px-6 py-2 text-ink-muted/70">
-              Tip: Ctrl/Cmd + click a link to test it opens correctly
-            </p>
+            {activeLinkHref && (
+              <div className="flex items-center justify-between gap-3 border-b border-rule bg-paper/60 px-4 py-2">
+                <span className="truncate text-xs text-ink-muted">{activeLinkHref}</span>
+                <a
+                  href={activeLinkHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 text-xs font-semibold text-signal underline decoration-signal/40 underline-offset-2"
+                >
+                  Open ↗
+                </a>
+              </div>
+            )}
           </>
         )}
-        <div className="p-6" onClick={handleEditorClick}>
+        <div className="p-6">
           <EditorContent editor={editor} />
         </div>
       </div>
