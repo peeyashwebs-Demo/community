@@ -1,6 +1,8 @@
 "use client";
 
+import { useRef, useState } from "react";
 import type { Editor } from "@tiptap/react";
+import { createClient } from "@/lib/supabase/client";
 import {
   Bold,
   Italic,
@@ -13,6 +15,7 @@ import {
   Heading3,
   Link as LinkIcon,
   ImageIcon,
+  Loader2,
   Undo2,
   Redo2,
 } from "lucide-react";
@@ -50,7 +53,19 @@ function Divider() {
   return <div className="mx-0.5 h-5 w-px flex-shrink-0 bg-rule sm:mx-1" />;
 }
 
-export function EditorToolbar({ editor }: { editor: Editor | null }) {
+export function EditorToolbar({
+  editor,
+  articleId,
+  authorId,
+}: {
+  editor: Editor | null;
+  articleId: string;
+  authorId: string;
+}) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const supabase = createClient();
+
   if (!editor) return null;
 
   function setLink() {
@@ -64,13 +79,42 @@ export function EditorToolbar({ editor }: { editor: Editor | null }) {
     editor!.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   }
 
-  function addImage() {
-    const url = window.prompt("Image URL");
-    if (url) editor!.chain().focus().setImage({ src: url }).run();
+  function openImagePicker() {
+    fileInputRef.current?.click();
+  }
+
+  async function handleImageFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    // Reset immediately so choosing the same file again still fires onChange.
+    e.target.value = "";
+    if (!file) return;
+
+    setUploading(true);
+
+    const path = `${authorId}/${articleId}-inline-${Date.now()}-${file.name}`;
+    const { error } = await supabase.storage.from("covers").upload(path, file);
+
+    if (error) {
+      window.alert("Couldn't upload that image — try again.");
+      setUploading(false);
+      return;
+    }
+
+    const { data } = supabase.storage.from("covers").getPublicUrl(path);
+    editor!.chain().focus().setImage({ src: data.publicUrl }).run();
+    setUploading(false);
   }
 
   return (
     <div className="flex flex-wrap items-center gap-0.5 border-b border-rule bg-paper/60 px-2 py-2 sm:gap-1 sm:px-3">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleImageFile}
+        className="hidden"
+      />
+
       <ToolbarButton
         label="Bold"
         active={editor.isActive("bold")}
@@ -146,8 +190,8 @@ export function EditorToolbar({ editor }: { editor: Editor | null }) {
       <ToolbarButton label="Link" active={editor.isActive("link")} onClick={setLink}>
         <LinkIcon size={16} />
       </ToolbarButton>
-      <ToolbarButton label="Image" onClick={addImage}>
-        <ImageIcon size={16} />
+      <ToolbarButton label="Upload image" disabled={uploading} onClick={openImagePicker}>
+        {uploading ? <Loader2 size={16} className="animate-spin" /> : <ImageIcon size={16} />}
       </ToolbarButton>
 
       <Divider />

@@ -193,7 +193,9 @@ export function ArticleEditor({
       )}
 
       <div className="mb-10 overflow-hidden rounded border border-rule bg-surface">
-        {canEdit && <EditorToolbar editor={editor} />}
+        {canEdit && (
+          <EditorToolbar editor={editor} articleId={article.id} authorId={article.author_id} />
+        )}
         <div className="p-6">
           <EditorContent editor={editor} />
         </div>
