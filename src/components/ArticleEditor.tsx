@@ -127,6 +127,20 @@ export function ArticleEditor({
     if (!error) router.push("/writer");
   }
 
+  // The editor deliberately doesn't navigate on a plain click on a link —
+  // that would blow away your place in the draft. Ctrl/Cmd+click is the
+  // standard editor convention (Notion, Google Docs, etc.) for "open this to
+  // check it works" without that risk.
+  function handleEditorClick(e: React.MouseEvent<HTMLDivElement>) {
+    if (!e.metaKey && !e.ctrlKey) return;
+    const link = (e.target as HTMLElement).closest("a");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (!href) return;
+    e.preventDefault();
+    window.open(href, "_blank", "noopener,noreferrer");
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-6 py-10 sm:px-10">
       <div className="mb-8 flex items-center justify-between">
@@ -195,9 +209,14 @@ export function ArticleEditor({
 
       <div className="mb-10 overflow-hidden rounded border border-rule bg-surface">
         {canEdit && (
-          <EditorToolbar editor={editor} articleId={article.id} authorId={article.author_id} />
+          <>
+            <EditorToolbar editor={editor} articleId={article.id} authorId={article.author_id} />
+            <p className="mono-label border-b border-rule bg-paper/40 px-6 py-2 text-ink-muted/70">
+              Tip: Ctrl/Cmd + click a link to test it opens correctly
+            </p>
+          </>
         )}
-        <div className="p-6">
+        <div className="p-6" onClick={handleEditorClick}>
           <EditorContent editor={editor} />
         </div>
       </div>
