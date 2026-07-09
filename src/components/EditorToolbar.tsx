@@ -72,11 +72,34 @@ export function EditorToolbar({
     const previousUrl = editor!.getAttributes("link").href;
     const url = window.prompt("Link URL", previousUrl || "https://");
     if (url === null) return;
+
     if (url === "") {
       editor!.chain().focus().extendMarkRange("link").unsetLink().run();
       return;
     }
-    editor!.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+
+    const { from, to } = editor!.state.selection;
+    const hasSelection = from !== to;
+
+    if (hasSelection) {
+      // Wrap the selected text in a link.
+      editor!.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+    } else {
+      // Nothing selected — a link mark with no text is invisible and
+      // unclickable, so ask what the link should say and insert real,
+      // clickable text instead of a silently broken link.
+      const text = window.prompt("Link text", url);
+      if (!text) return;
+      editor!
+        .chain()
+        .focus()
+        .insertContent({
+          type: "text",
+          text,
+          marks: [{ type: "link", attrs: { href: url } }],
+        })
+        .run();
+    }
   }
 
   function openImagePicker() {
@@ -101,7 +124,7 @@ export function EditorToolbar({
     }
 
     const { data } = supabase.storage.from("covers").getPublicUrl(path);
-    editor!.chain().focus().setImage({ src: data.publicUrl }).run();
+    editor!.chain().focus().setImage({ src: data.publicUrl }).createParagraphNear().run();
     setUploading(false);
   }
 

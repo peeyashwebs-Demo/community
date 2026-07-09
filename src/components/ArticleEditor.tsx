@@ -53,7 +53,8 @@ export function ArticleEditor({
       TiptapUnderline,
       TiptapLink.configure({
         openOnClick: false,
-        HTMLAttributes: { rel: "noopener noreferrer" },
+        autolink: true,
+        HTMLAttributes: { target: "_blank", rel: "noopener noreferrer" },
       }),
     ],
     content: article.body,

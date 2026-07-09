@@ -108,7 +108,7 @@
   }
   .prose-article img,
   .prose-editor img {
-    @apply my-8 rounded;
+    @apply my-8 block h-auto w-full max-w-full rounded;
   }
   .prose-article a,
   .prose-editor a {
